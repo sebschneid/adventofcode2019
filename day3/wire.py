@@ -22,10 +22,10 @@ class Instruction(NamedTuple):
 
 
 STRING_TO_DIRECTION = {
-    'L': Direction.LEFT,
-    'R': Direction.RIGHT,
-    'U': Direction.UP,
-    'D': Direction.DOWN,
+    "L": Direction.LEFT,
+    "R": Direction.RIGHT,
+    "U": Direction.UP,
+    "D": Direction.DOWN,
 }
 
 DIRECTION_TO_MOVE = {
@@ -39,9 +39,9 @@ DIRECTION_TO_MOVE = {
 def get_instructions(instruction_strings: List[str]) -> List[Instruction]:
     return [
         Instruction(
-            direction=STRING_TO_DIRECTION[string[0]],
-            steps=int(string[1:])
-        ) for string in instruction_strings
+            direction=STRING_TO_DIRECTION[string[0]], steps=int(string[1:])
+        )
+        for string in instruction_strings
     ]
 
 
@@ -58,7 +58,9 @@ def execute_instructions(instructions: List[Instruction]) -> Set[Position]:
     counter = 1
     for instruction in instructions:
         for step in range(instruction.steps):
-            current_position = update_position(current_position, instruction.direction)
+            current_position = update_position(
+                current_position, instruction.direction
+            )
             positions.add(current_position)
             if current_position not in positions_to_length.keys():
                 positions_to_length[current_position] = counter

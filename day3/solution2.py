@@ -1,4 +1,3 @@
-
 import enum
 import numpy as np
 from typing import NamedTuple, List, Set
@@ -23,10 +22,10 @@ class Instruction(NamedTuple):
 
 
 STRING_TO_DIRECTION = {
-    'L': Direction.LEFT,
-    'R': Direction.RIGHT,
-    'U': Direction.UP,
-    'D': Direction.DOWN,
+    "L": Direction.LEFT,
+    "R": Direction.RIGHT,
+    "U": Direction.UP,
+    "D": Direction.DOWN,
 }
 
 DIRECTION_TO_MOVE = {
@@ -42,9 +41,9 @@ position_to_length2 = {}
 def get_instructions(instruction_strings: List[str]) -> List[Instruction]:
     return [
         Instruction(
-            direction=STRING_TO_DIRECTION[string[0]],
-            steps=int(string[1:])
-        ) for string in instruction_strings
+            direction=STRING_TO_DIRECTION[string[0]], steps=int(string[1:])
+        )
+        for string in instruction_strings
     ]
 
 
@@ -61,7 +60,9 @@ def execute_instructions(instructions: List[Instruction]) -> Set[Position]:
     counter = 1
     for instruction in instructions:
         for step in range(instruction.steps):
-            current_position = update_position(current_position, instruction.direction)
+            current_position = update_position(
+                current_position, instruction.direction
+            )
             positions.add(current_position)
             if current_position not in positions_to_length.keys():
                 positions_to_length[current_position] = counter
@@ -70,8 +71,8 @@ def execute_instructions(instructions: List[Instruction]) -> Set[Position]:
 
 
 with open("input.txt") as file:
-    wire1_instruction_strings = file.readline().strip("\n").split(',')
-    wire2_instruction_strings = file.readline().strip("\n").split(',')
+    wire1_instruction_strings = file.readline().strip("\n").split(",")
+    wire2_instruction_strings = file.readline().strip("\n").split(",")
 
 wire1_instructions = get_instructions(wire1_instruction_strings)
 wire2_instructions = get_instructions(wire2_instruction_strings)
@@ -81,5 +82,10 @@ positions1, positions_to_length1 = execute_instructions(wire1_instructions)
 positions2, positions_to_length2 = execute_instructions(wire2_instructions)
 
 intersection_points = positions1.intersection(positions2)
-distances_on_wire = [positions_to_length1[position] + positions_to_length2[position] for position in intersection_points]
-print(f"Minimal steps on both wires to an intersection point is {min(distances_on_wire)}")
+distances_on_wire = [
+    positions_to_length1[position] + positions_to_length2[position]
+    for position in intersection_points
+]
+print(
+    f"Minimal steps on both wires to an intersection point is {min(distances_on_wire)}"
+)
