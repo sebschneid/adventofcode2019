@@ -2,9 +2,9 @@
 # 1: add from two positions and store in third (next three integers)
 # 2: like 1 but multiply
 # Next opcode 4 positions later
-'''
+"""
 replace position 1 with the value 12 and replace position 2 with the value 2. What value is left at position 0 after the program halts?
-'''
+"""
 
 
 def evaluate_opcode(opcode, intcode, position):
@@ -17,7 +17,7 @@ def evaluate_opcode(opcode, intcode, position):
 
 # read input intcode
 with open("input.txt") as file:
-    intcode_start = file.read().rstrip("\n").split(',')
+    intcode_start = file.read().rstrip("\n").split(",")
     intcode_start = [int(code) for code in intcode_start]
 
 
