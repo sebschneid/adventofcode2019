@@ -14,6 +14,7 @@ def test_result(
     assert position == test_position
     assert count == test_count
 
+
 # test part 1
 
 
@@ -134,14 +135,36 @@ TEST_INPUT = """
 asteroid_map = asteroids.asteroid_map_from_inputs(TEST_INPUT)
 position, count = asteroids.asteroid_with_max_visible_asteroids(asteroid_map)
 
-assert asteroids.Position(11, 12) == asteroids.nth_asteroid_destroyed(copy.deepcopy(asteroid_map), position, 1)
-assert asteroids.Position(12, 1) == asteroids.nth_asteroid_destroyed(copy.deepcopy(asteroid_map), position, 2)
-assert asteroids.Position(12, 2) == asteroids.nth_asteroid_destroyed(copy.deepcopy(asteroid_map), position, 3)
-assert asteroids.Position(12, 8) == asteroids.nth_asteroid_destroyed(copy.deepcopy(asteroid_map), position, 10)
-assert asteroids.Position(16, 0) == asteroids.nth_asteroid_destroyed(copy.deepcopy(asteroid_map), position, 20)
-assert asteroids.Position(16, 9) == asteroids.nth_asteroid_destroyed(copy.deepcopy(asteroid_map), position, 50)
-assert asteroids.Position(10, 16) == asteroids.nth_asteroid_destroyed(copy.deepcopy(asteroid_map), position, 100)
-assert asteroids.Position(9, 6) == asteroids.nth_asteroid_destroyed(copy.deepcopy(asteroid_map), position, 199)
-assert asteroids.Position(8, 2) == asteroids.nth_asteroid_destroyed(copy.deepcopy(asteroid_map), position, 200)
-assert asteroids.Position(10, 9) == asteroids.nth_asteroid_destroyed(copy.deepcopy(asteroid_map), position, 201)
-assert asteroids.Position(11, 1) == asteroids.nth_asteroid_destroyed(copy.deepcopy(asteroid_map), position, 299)
+assert asteroids.Position(11, 12) == asteroids.nth_asteroid_destroyed(
+    copy.deepcopy(asteroid_map), position, 1
+)
+assert asteroids.Position(12, 1) == asteroids.nth_asteroid_destroyed(
+    copy.deepcopy(asteroid_map), position, 2
+)
+assert asteroids.Position(12, 2) == asteroids.nth_asteroid_destroyed(
+    copy.deepcopy(asteroid_map), position, 3
+)
+assert asteroids.Position(12, 8) == asteroids.nth_asteroid_destroyed(
+    copy.deepcopy(asteroid_map), position, 10
+)
+assert asteroids.Position(16, 0) == asteroids.nth_asteroid_destroyed(
+    copy.deepcopy(asteroid_map), position, 20
+)
+assert asteroids.Position(16, 9) == asteroids.nth_asteroid_destroyed(
+    copy.deepcopy(asteroid_map), position, 50
+)
+assert asteroids.Position(10, 16) == asteroids.nth_asteroid_destroyed(
+    copy.deepcopy(asteroid_map), position, 100
+)
+assert asteroids.Position(9, 6) == asteroids.nth_asteroid_destroyed(
+    copy.deepcopy(asteroid_map), position, 199
+)
+assert asteroids.Position(8, 2) == asteroids.nth_asteroid_destroyed(
+    copy.deepcopy(asteroid_map), position, 200
+)
+assert asteroids.Position(10, 9) == asteroids.nth_asteroid_destroyed(
+    copy.deepcopy(asteroid_map), position, 201
+)
+assert asteroids.Position(11, 1) == asteroids.nth_asteroid_destroyed(
+    copy.deepcopy(asteroid_map), position, 299
+)

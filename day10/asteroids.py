@@ -72,7 +72,9 @@ def position_in_map(position: Position, asteroid_map: AsteroidMap) -> bool:
     )
 
 
-def detectable_asteroids(position: Position, asteroid_map: AsteroidMap) -> set[Position]:
+def detectable_asteroids(
+    position: Position, asteroid_map: AsteroidMap
+) -> set[Position]:
     all_asteroid_positions = list(asteroid_map.asteroids.keys())
     other_asteroid_positions = set(all_asteroid_positions) - set([position])
 
@@ -135,13 +137,17 @@ def asteroid_with_max_visible_asteroids(
     return asteroid_position, max_count
 
 
-def nth_asteroid_destroyed(asteroid_map: AsteroidMap, laser_position: Position, nth: int) -> Position:
+def nth_asteroid_destroyed(
+    asteroid_map: AsteroidMap, laser_position: Position, nth: int
+) -> Position:
     asteroids_destroyed = 0
     while True:
         visible_asteroids = detectable_asteroids(laser_position, asteroid_map)
         asteroid_angles = {
             other_position: get_angle(
-                transform_vector(distance_vector(laser_position, other_position))
+                transform_vector(
+                    distance_vector(laser_position, other_position)
+                )
             )
             for other_position in visible_asteroids
         }
