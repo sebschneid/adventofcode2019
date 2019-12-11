@@ -1,0 +1,6 @@
+# ninja log v5
+0	2610	1576023191472086871	/Users/sschneider/Documents/Private/Development/adventofcode2019/day10/.pytype/pyi/asteroids.pyi	2acbe87dc0639c9f
+2610	4560	1576023193579109902	/Users/sschneider/Documents/Private/Development/adventofcode2019/day10/.pytype/pyi/test_asteroids.pyi	a546e2659e5f317d
+2610	4986	1576023194023134909	/Users/sschneider/Documents/Private/Development/adventofcode2019/day10/.pytype/pyi/solution1.pyi	495aaa1fcf0b11d2
+2610	5012	1576023194047976075	/Users/sschneider/Documents/Private/Development/adventofcode2019/day10/.pytype/pyi/solution2.pyi	b5d68dd1104b814d
+0	1031	1576023218894195192	/Users/sschneider/Documents/Private/Development/adventofcode2019/day10/.pytype/pyi/test_angles.pyi	29983f0796fcbc4
