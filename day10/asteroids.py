@@ -72,7 +72,7 @@ def position_in_map(position: Position, asteroid_map: AsteroidMap) -> bool:
     )
 
 
-def asteroid_count(position: Position, asteroid_map: AsteroidMap) -> int:
+def detectable_asteroids(position: Position, asteroid_map: AsteroidMap) -> int:
     all_asteroid_positions = list(asteroid_map.asteroids.keys())
     other_asteroid_positions = set(all_asteroid_positions) - set([position])
 
@@ -87,11 +87,11 @@ def asteroid_count(position: Position, asteroid_map: AsteroidMap) -> int:
             f"Finished for this asteroid. Asteroids at {blocked_asteroids} are not in sight"
         )
 
-    asteroid_count = len(other_asteroid_positions - blocked_asteroids_all)
+    asteroids = other_asteroid_positions - blocked_asteroids_all
     logging.debug(
-        f"For asteroid at position {position} the postions {blocked_asteroids_all} are not in sight, so {asteroid_count} are in sight!"
+        f"For asteroid at position {position} the postions {blocked_asteroids_all} are not in sight, so {len(asteroids)} are in sight!"
     )
-    return asteroid_count
+    return asteroids
 
 
 ASTEROID = "#"
@@ -109,9 +109,7 @@ def asteroid_map_from_inputs(inputs: str) -> AsteroidMap:
 
     x_size = len(lines[0])
     y_size = len(lines)
-    asteroid_map = AsteroidMap(
-        asteroids=asteroids, size=(x_size, y_size)
-    )
+    asteroid_map = AsteroidMap(asteroids=asteroids, size=(x_size, y_size))
     return asteroid_map
 
 
@@ -121,7 +119,9 @@ def asteroid_with_max_visible_asteroids(
     asteroid_to_count = {}
     for position in asteroid_map.asteroids.keys():
         logging.debug(f"Evaluating asteroid at position {position}")
-        asteroid_to_count[position] = asteroid_count(position, asteroid_map)
+        asteroid_to_count[position] = len(
+            detectable_asteroids(position, asteroid_map)
+        )
         logging.debug(
             f"There are {asteroid_to_count[position]} asteroids in sight from this position!"
         )
@@ -133,3 +133,52 @@ def asteroid_with_max_visible_asteroids(
         f"Maximal asteroids visible from position {asteroid_position}: {max_count}"
     )
     return asteroid_position, max_count
+
+
+def nth_asteroid_destroyed(asteroid_map: AsteroidMap, laser_position: Position, nth: int) -> Position:
+    asteroids_destroyed = 0
+    while True:
+        visible_asteroids = detectable_asteroids(laser_position, asteroid_map)
+        asteroid_angles = {
+            other_position: get_angle(
+                transform_vector(distance_vector(laser_position, other_position))
+            )
+            for other_position in visible_asteroids
+        }
+
+        positions_to_destroy = sorted(asteroid_angles, key=asteroid_angles.get)
+        for position in positions_to_destroy:
+            del asteroid_map.asteroids[position]
+            asteroids_destroyed += 1
+            if asteroids_destroyed == nth:
+                return position
+
+
+def get_angle(vector: DistanceVector) -> float:
+    angle = math.atan2(vector.dy, vector.dx)
+    if angle < 0:
+        angle += math.pi * 2
+    return angle
+
+
+def transform_vector(vector: DistanceVector) -> DistanceVector:
+    vector = upwards_vector(vector)
+    vector = rotate_vector(vector)
+    vector = clockwise_vector(vector)
+    return vector
+
+
+def upwards_vector(vector: DistanceVector) -> DistanceVector:
+    # dy = -dy because (8, 3) -> (8, 1) is (0, -2) and should be (0, 2)
+    return DistanceVector(dx=vector.dx, dy=-vector.dy)
+
+
+def rotate_vector(
+    vector: DistanceVector, angle: float = math.pi / 2, precision: int = 4
+) -> DistanceVector:
+    return DistanceVector(dx=-vector.dy, dy=vector.dx)
+
+
+def clockwise_vector(vector: DistanceVector) -> DistanceVector:
+    # clockwise direction
+    return DistanceVector(dx=-vector.dx, dy=vector.dy)
